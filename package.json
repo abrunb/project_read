@@ -9,6 +9,9 @@
   "author": "alexandre brun",
   "license": "ISC",
   "dependencies": {
-    "csv-parser": "^3.0.0"
+    "papaparse": "^5.3.2"
+  },
+  "devDependencies": {
+    "@types/papaparse": "^5.3.2"
   }
 }

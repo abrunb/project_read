@@ -1,32 +1,39 @@
-const http = require('http')
-const fs = require('fs').promises;
-const csv = require('csv-parser')
+const fs = require("fs")
+const Papa = require("papaparse")
 
-const host = 'localhost';
-const port = 8080;
+const readCsv = (input_stream) => {
+    return new Promise((resolve, reject) => {
+        let count = 0
 
-
-const requestListener = async function (req, res) {
-    res.setHeader("Content-Type", "text/csv");
-    const foo = await fs.readFile(__dirname + "/list.csv")
-    res.writeHead(200);
-    res.end(foo);
-};
-
-const server = http.createServer(requestListener);
-
-server.listen(port, host, () => {
-    console.log(`Server is running on http://${host}:${port}`);
-});
-
-
-async function readFile(filePath) {
-    try {
-        const data = await fs.readFile(filePath);
-        console.log(data.toString());
-    } catch (error) {
-        console.error(`Got an error trying to read the file: ${error.message}`);
-    }
+        Papa.parse(input_stream, {
+            header: true,
+            step(row) {
+                if (count === 0) {
+                    console.log(row)
+                }
+                ++count
+            },
+            complete() {
+                resolve(count)
+            },
+            error(err) {
+                reject(err)
+            },
+            delimiter: ','
+        })
+    })
 }
 
-readFile('list.csv')
+async function main() {
+    const input_file = 'list.csv'
+    const input_stream = fs.createReadStream(input_file)
+
+
+    console.log("a")
+    
+    const count = await readCsv(input_stream)
+    
+    console.log("c", count)
+}
+
+main()
