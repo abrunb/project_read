@@ -1,0 +1,14 @@
+{
+  "name": "project_read_csv",
+  "version": "1.0.0",
+  "description": "software to read csv_file as param and send data to a server ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "alexandre brun",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parser": "^3.0.0"
+  }
+}
